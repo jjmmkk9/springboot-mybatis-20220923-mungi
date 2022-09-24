@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+        }
+        #container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            margin: 0 auto;
+
+            width: 1100px;
+            height: 100%;
+        }
+        table{
+            border-collapse: collapse;
+            border:2px solid #dbdbdb;
+
+            width: 700px;
+            height: 500px;
+        }
+        th, td{
+            border:1px solid #dbdbdb;
+        }
+        input, textarea{
+            border: none;
+            outline: none;
+
+            width: 100%;
+            height: 100%;
+        }
+        textarea{
+            height: 300px;
+
+            resize: none;
+        }
+        input:focus, textarea:focus{
+            background-color: #fafafa;
+        }
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <!-- form안에서는 name들이 dto변수들로 사용된다 -->
+        <form>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <h1>뉴스정보</h1>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>
+                        <!-- <label>의 for와 <input>의 id가 같으면 label을 눌렀을 때 input을 클릭한것과 같은 효과!
+                                예를들어 text를 받는 <input>이라면 앞에 "제목"을 눌렀을 때도 입력란에 커서가 깜빡이며 입력준비상태가 됨
+                                체크박스 <input>일 때도 동일하게 앞의 텍스트를 눌러서 체크를 하고 풀수 있음-->
+                        <label for="title">제목</label>
+                    </th>
+                    <td>
+                        <input type="text" id="title" name="title">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="broadcasting-name">방송국명</label>
+                    </th>
+                    <td>
+                        <input type="text" id="broadcasting-name" name="broadcastingName">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="broadcasting-name">첨부이미지</label>
+                    </th>
+                    <td>
+                        <!--파일, 이미지만!-->
+                        <input type="file" name="files" class="file-input" accept="image/gif, image/png, image/jpeg" multiple>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="content">기사내용</label>
+                    </th>
+                    <td>
+                        <textarea id="content" name="content"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="2">
+                        <button type="button" class="write-button">작성하기</button>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <div class="preview">
+
+        </div>
+    </div>
+    <script>
+        const writeButton = document.querySelector(".write-button");
+
+
+        writeButton.onclick = () =>{
+            request();
+        }
+
+//폼데이터 리턴하는 메소드, 두번째로 만듦
+        function getFormData(){
+            const form = document.querySelector("form");
+            return new FormData(form) //폼안에 들어있는 모든 정보들이 FormData안에 담긴다.
+        }
+//제일 먼저 만듦
+        function request(){
+            $.ajax({
+                async:false,
+                type: "post",
+                url: "/api/news",
+                enctype:"multipart/form-data",  //폼데이터 보낼때 필수
+                contentType: false,             //폼데이터 보낼때 필수
+                processData: false,             //폼데이터 보낼때 필수
+                data: getFormData(),    //폼데이터 객체가 들어와야해서 객체 만드는 메소드 만들어줘야됨
+                dataType:"json",
+                success: (response) => {
+                    console.log(response);
+                    appendData(response);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+
+        }
+                        //response는 NewsController의 리턴인 CMRespDto임
+        function appendData(response){
+            const body = document.querySelector("body");
+
+            body.innerHTML = `
+                    <h2>코드: ${response.code}</h2>
+                    <h2>msg: ${response.msg}</h2>
+                    <h2>title: ${response.data.title}</h2>
+                    <h2>broadcastingName: ${response.data.broadcastingName}</h2>
+                    <h2>content: ${response.data.content}</h2>
+                    <h2>파일 리스트</h2>
+                    `;
+                for(let i = 0; i < response.data.fileNames.length; i++){
+                    body.innerHTML +=`
+                        <h3>${response.data.fileNames[i]}</h3>
+                    `;
+                }
+        }
+
+
+
+
+    </script>
+</body>
+</html>

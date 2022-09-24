@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.mybatis20220923mungi.repository.NewsRepository">
+    <!-- id가 메소드명-->        <!-- save에서 보내주는 파라미터 타입(자료형)을 여기서 정해줌 -->
+    <!-- insert, update, delete는 리턴 자료형이 int라서 정의하지 않아도 된다.  -->
+    <insert id="save" parameterType="com.boot.mybatis20220923mungi.domain.News" >
+        insert into
+            news_mst
+        values(
+            0, <!-- auto increment 라서 걍 0  -->
+            #{news_title},
+            #{news_writer},
+            #{news_broadcasting},
+            #{news_content},
+            now(),
+            now()
+        )
+    </insert>
+</mapper>
