@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.mybatis20220923mungi.repository.UserRepository">
+
+    <!-- insert, update, delete는 리턴 자료형이 int라서 정의하지 않아도 된다.  -->
+    <!-- id가 메소드명-->        <!-- save에서 보내주는 파라미터 타입(자료형)을 여기서 정해줌 -->
+    <insert
+            id="save"
+            parameterType="com.boot.mybatis20220923mungi.domain.User"
+            useGeneratedKeys="true"
+            keyProperty="user_code"
+    >
+        insert into
+            user_mst
+        values(
+            0, <!-- auto increment 라서 걍 0  -->
+            #{user_id},
+            #{user_password},
+            #{user_name},
+            #{user_email}
+        )
+    </insert>
+</mapper>

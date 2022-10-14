@@ -5,7 +5,10 @@ import lombok.Data;
 import org.apache.tomcat.jni.Multicast;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 public class NewsWriteReqDto {
@@ -16,7 +19,8 @@ public class NewsWriteReqDto {
     private List<MultipartFile> files;
 
 
-    public News toEntity(){
+    public News toEntity(String writer){
+
         return News.builder()
                 .news_title(title)
                 .news_writer(writer)

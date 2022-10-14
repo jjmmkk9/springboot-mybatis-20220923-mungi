@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+                <!--  타임리프 사용하는 html 에는 무조건 있어야됨-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/read.css">
+
+</head>
+    <body>
+        <div id="container">
+            <table>
+                <thead>
+                <tr>
+                    <th colspan="2">
+                        <h1 class="news-title"></h1>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>방송국명</th>
+                    <td class="news-broadcasting">Title</td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td class="news-writer">Title</td>
+                </tr>
+                <tr>
+                    <th>작성일</th>
+                    <td class="news-create-date">Title</td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td><pre class="news-content"></pre></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>첨부파일</th>
+                        <td class="news-files"></td>
+                    </tr>
+
+                </tfoot>
+            </table>
+        </div>
+    <script src="/static/js/read.js"></script>
+    </body>
+</html>

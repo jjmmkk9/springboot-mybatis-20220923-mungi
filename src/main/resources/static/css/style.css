@@ -1,0 +1,14 @@
+*{
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+table{
+    border-collapse: collapse;
+    border: 1px solid #141414;
+}
